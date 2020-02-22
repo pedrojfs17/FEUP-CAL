@@ -5,6 +5,11 @@
 #ifndef PARTITIONING_H_
 #define PARTITIONING_H_
 
+#include <algorithm>
+#include <iostream>
+
+using namespace std;
+
 /*Implementa a fun��o s(n,k) usando recursividade*/
 int s_recursive(int n,int k);
 
