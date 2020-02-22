@@ -6,6 +6,10 @@
 #define SUM_H_
 
 #include <string>
+#include <algorithm>
+#include <iostream>
+#include <chrono>
+#include <fstream>
 using namespace std;
 
 

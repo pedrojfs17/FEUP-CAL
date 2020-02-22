@@ -34,6 +34,7 @@ string calcChange(int m, int numCoins, int *coinValues)
     if (m == 0)
         return "";
 
+
     int minCoins[m + 1];
     int lastCoin[m + 1];
 
