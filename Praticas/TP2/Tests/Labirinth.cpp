@@ -65,6 +65,6 @@ bool Labirinth::findGoal(int x, int y)
 }
 
 /* 1.b) Tempo de execução no pior caso (pesquisa exaustiva do espaço de estados) é determinado pela dimensão do espaço
- * de estados, que muitas vezes é exponencial. 
+ * de estados, que muitas vezes é exponencial.
  */
 

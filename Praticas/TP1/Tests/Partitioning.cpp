@@ -21,14 +21,13 @@ int s_dynamic(int n,int k)
     // Initialize the array with 1's
     fill_n(s, k, 1);
 
-    for (int i = 1; i <= k; i++) {
-        for (int j = i; j <= n - k; j++) {
-            s[j] += s[j-1];
-            cout << "s[j] = " << s[j] << endl;
+    for (int i = 0; i < n - k; i++) {
+        for (int j = 1; j < k; j++) {
+            s[j] = (j + 1) * s[j] + s[j - 1];
         }
     }
 
-    return s[n - k];
+    return s[k - 1];
 }
 
 
@@ -44,7 +43,7 @@ int b_dynamic(int n)
 {
     int sum = 0;
     for (int k = 1; k <= n; k++)
-        sum += s_recursive(n, k);
+        sum += s_dynamic(n, k);
     return sum;
 }
 
