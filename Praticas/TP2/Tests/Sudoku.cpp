@@ -94,7 +94,7 @@ bool Sudoku::isComplete()
  */
 bool Sudoku::solve()
 {
-	return false;
+    return solve(0,0);
 }
 
 
@@ -111,4 +111,52 @@ void Sudoku::print()
 
 		cout << endl;
 	}
+}
+
+bool Sudoku::solve(int i, int j) {
+    if (i > 8) {
+        i = 0;
+        j++;
+    }
+
+    // Base case
+    if (isComplete() ||  j > 8)
+        return true;
+
+    // Check if this box is already solved
+    if (numbers[i][j] != 0) {
+        if (i == 8 && j == 8)
+            return true;
+        else
+            return solve(i + 1, j);
+    }
+
+    for (int n = 1; n <= 9; n++) {
+        if (!lineHasNumber[i][n] && !columnHasNumber[j][n] && !block3x3HasNumber[i / 3][j / 3][n]) {
+            checkBox(i, j, n);
+
+            if (solve(i + 1, j))
+                return true;
+            else
+                uncheckBox(i, j, n);
+        }
+    }
+
+    return false;
+}
+
+void Sudoku::checkBox(int i, int j, int n) {
+    numbers[i][j] = n;
+    lineHasNumber[i][n] = true;
+    columnHasNumber[j][n] = true;
+    block3x3HasNumber[i / 3][j / 3][n] = true;
+    countFilled++;
+}
+
+void Sudoku::uncheckBox(int i, int j, int n) {
+    numbers[i][j] = 0;
+    lineHasNumber[i][n] = false;
+    columnHasNumber[j][n] = false;
+    block3x3HasNumber[i / 3][j / 3][n] = false;
+    countFilled--;
 }

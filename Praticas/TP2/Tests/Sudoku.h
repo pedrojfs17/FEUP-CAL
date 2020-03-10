@@ -72,6 +72,12 @@ public:
 	 * Imprime o Sudoku.
 	 */
 	void print();
+
+    bool solve(int i, int j);
+
+    void checkBox(int i, int j, int n);
+
+    void uncheckBox(int i, int j, int n);
 };
 
 #endif /* SUDOKU_H_ */
