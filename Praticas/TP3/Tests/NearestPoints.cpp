@@ -77,7 +77,15 @@ Result nearestPoints_BF_SortByX(vector<Point> &vp) {
  */
 static void npByY(vector<Point> &vp, int left, int right, Result &res)
 {
-	// TODO
+    for (int i = left; i <= right; i++) {
+        for (int j = i + 1; j <= right; j++) {
+            if (vp[i].distance(vp[j]) < res.dmin) {
+                res.p1 = vp[i];
+                res.p2 = vp[j];
+                res.dmin = vp[i].distance(vp[j]);
+            }
+        }
+    }
 }
 
 /**
@@ -86,32 +94,56 @@ static void npByY(vector<Point> &vp, int left, int right, Result &res)
  * using at most numThreads.
  */
 static Result np_DC(vector<Point> &vp, int left, int right, int numThreads) {
-	// Base case of two points
-	// TODO
+    Result res;
+
+    // Base case of two points
+	if (right - left == 1) {
+	    res.p1 = vp[left];
+	    res.p2 = vp[right];
+	    res.dmin = vp[left].distance(vp[right]);
+	    return res;
+	}
 
 	// Base case of a single point: no solution, so distance is MAX_DOUBLE
-	// TODO
+	if (right - left == 0) {
+	    res.dmin = MAX_DOUBLE;
+	    return res;
+	}
 
 	// Divide in halves (left and right) and solve them recursively,
 	// possibly in parallel (in case numThreads > 1)
-	// TODO
+	int middle = (left + right) / 2;
+	Result minLeft = np_DC(vp, left, middle, numThreads);
+    Result minRight = np_DC(vp, middle + 1, right, numThreads);
 
 	// Select the best solution from left and right
-	// TODO
+	if (minLeft.dmin < minRight.dmin)
+        res = minLeft;
+    else
+        res = minRight;
 
 	// Determine the strip area around middle point
-	// TODO
+	int indexLeft = middle;
+	int indexRight = middle;
+
+	while (indexLeft > left && abs(vp[middle].x - vp[indexLeft].x) < res.dmin) {
+	    indexLeft--;
+	}
+
+    while (indexRight < right && abs(vp[middle].x - vp[indexRight].x) < res.dmin) {
+        indexRight++;
+    }
 
 	// Order points in strip area by Y coordinate
-	// TODO
+	sortByY(vp, indexLeft, indexRight);
 
 	// Calculate nearest points in strip area (using npByY function)
-	// TODO
+	npByY(vp, indexLeft, indexRight, res);
 
 	// Reorder points in strip area back by X coordinate
-	//TODO
+	sortByX(vp, indexLeft, indexRight);
 
-	//return res;
+	return res;
 }
 
 
