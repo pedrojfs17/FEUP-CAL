@@ -44,7 +44,6 @@ static void sortByY(vector<Point> &v, int left, int right)
 Result nearestPoints_BF(vector<Point> &vp) {
 	Result res;
 
-	cout << "vp size = " << vp.size() << endl;
     for (int i = 0; i < vp.size(); i++) {
         for (int j = i + 1; j < vp.size(); j++) {
             if (vp[i].distance(vp[j]) < res.dmin) {
@@ -64,7 +63,17 @@ Result nearestPoints_BF(vector<Point> &vp) {
 Result nearestPoints_BF_SortByX(vector<Point> &vp) {
 	Result res;
 	sortByX(vp, 0, vp.size()-1);
-	// TODO
+
+    for (int i = 0; i < vp.size(); i++) {
+        for (int j = i + 1; j < vp.size(); j++) {
+            if (vp[i].distance(vp[j]) < res.dmin) {
+                res.dmin = vp[i].distance(vp[j]);
+                res.p1 = vp[i];
+                res.p2 = vp[j];
+            }
+        }
+    }
+
 	return res;
 }
 
@@ -79,7 +88,9 @@ static void npByY(vector<Point> &vp, int left, int right, Result &res)
 {
     for (int i = left; i <= right; i++) {
         for (int j = i + 1; j <= right; j++) {
-            if (vp[i].distance(vp[j]) < res.dmin) {
+            if (abs(vp[i].y - vp[j].y) > res.dmin)
+                break;
+            else if (vp[i].distance(vp[j]) < res.dmin) {
                 res.p1 = vp[i];
                 res.p2 = vp[j];
                 res.dmin = vp[i].distance(vp[j]);
@@ -112,9 +123,19 @@ static Result np_DC(vector<Point> &vp, int left, int right, int numThreads) {
 
 	// Divide in halves (left and right) and solve them recursively,
 	// possibly in parallel (in case numThreads > 1)
-	int middle = (left + right) / 2;
-	Result minLeft = np_DC(vp, left, middle, numThreads);
-    Result minRight = np_DC(vp, middle + 1, right, numThreads);
+    int middle = (left + right) / 2;
+	Result minLeft, minRight;
+	if (numThreads <= 1) {
+        minLeft = np_DC(vp, left, middle, numThreads);
+        minRight = np_DC(vp, middle + 1, right, numThreads);
+    }
+	else {
+	    thread t([&vp, &minLeft, left, middle, numThreads]{
+            minLeft = np_DC(vp, left, middle, numThreads/2);
+	    });
+        minRight = np_DC(vp, middle + 1, right, numThreads/2);
+        t.join();
+	}
 
 	// Select the best solution from left and right
 	if (minLeft.dmin < minRight.dmin)
