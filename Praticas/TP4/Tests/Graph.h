@@ -198,6 +198,13 @@ bool Graph<T>::removeVertex(const T &in) {
 	}
 
 	if (aux != vertexSet.end()) {
+        // Delete the edges of the elements before
+        it = vertexSet.begin();
+        while (it != aux) {
+            (*it)->removeEdgeTo(*aux);
+            it++;
+        }
+
         vertexSet.erase(aux);
         return true;
     }

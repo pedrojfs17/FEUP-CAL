@@ -119,7 +119,7 @@ TEST(CAL_FP04, test_bfs) {
 }
 
 TEST(CAL_FP04, test_removeVertex_Again) {
-    /* //uncomment test body below!
+    //uncomment test body below!
     Graph<Person> net1;
     createNetwork(net1);
     Person p2("Carlos",33);
@@ -128,11 +128,10 @@ TEST(CAL_FP04, test_removeVertex_Again) {
     string names[] = {"Ana", "Filipe", "Rui", "Vasco", "Ines", "Maria"};
     for (unsigned i = 0; i < 6; i++)
         EXPECT_EQ(names[i], v1[i].getName());
-     */
 }
 
 TEST(CAL_FP04, test_removeEdge_Again) {
-    /* //uncomment test body below!
+    //uncomment test body below!
     Graph<Person> net1;
     createNetwork(net1);
     Person p5("Maria", 24);
@@ -142,7 +141,6 @@ TEST(CAL_FP04, test_removeEdge_Again) {
     string names[] = {"Ana", "Carlos", "Maria", "Filipe", "Rui", "Vasco", "Ines"};
     for (unsigned i = 0; i < 7; i++)
         EXPECT_EQ(names[i], v1[i].getName());
-     */
 }
 
 TEST(CAL_FP04, test_maxNewChildren) {
