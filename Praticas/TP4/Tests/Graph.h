@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <queue>
+#include <list>
 using namespace std;
 
 template <class T> class Edge;
@@ -312,8 +313,67 @@ vector<T> Graph<T>::bfs(const T & source) const {
 template<class T>
 vector<T> Graph<T>::topsort() const {
 	// TODO (26 lines)
-	vector<T> res;
-	return res;
+    // Step 1
+    typename vector<Vertex<T> *>::const_iterator it = vertexSet.begin();
+    while (it != vertexSet.end()) {
+        (*it)->indegree = 0;
+        it++;
+    }
+
+    // Step 2
+    it = vertexSet.begin();
+    while (it != vertexSet.end()) {
+        typename vector<Edge<T>>::const_iterator it2 = (*it)->adj.begin();
+        while (it2 != (*it)->adj.end()) {
+            (*it2).dest->indegree++;
+            it2++;
+        }
+        it++;
+    }
+
+    // Step 3
+    queue<Vertex<T>*> C;
+
+    // Step 4
+    it = vertexSet.begin();
+    while (it != vertexSet.end()) {
+        if ((*it)->indegree == 0)
+            C.push(*it);
+        it++;
+    }
+
+    // Step 5
+    vector<T> res;
+    Vertex<T>* v;
+
+    // Step 6
+    typename vector<Edge<T>>::const_iterator it2;
+    while (!C.empty()) {
+        // Step 7
+        v = C.front();
+        C.pop();
+
+        // Step 8
+        res.push_back(v->info);
+
+        // Step 9
+        it2 = v->adj.begin();
+        while (it2 != v->adj.end()) {
+            // Step 10
+            (*it2).dest->indegree--;
+
+            // Step 11
+            if ((*it2).dest->indegree == 0)
+                C.push((*it2).dest);
+            it2++;
+        }
+    }
+
+    // Step 12
+    if (res.size() != vertexSet.size())
+        res.clear();
+
+    return res;
 }
 
 /****************** 3a) maxNewChildren (HOME WORK)  ********************/
