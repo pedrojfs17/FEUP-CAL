@@ -266,6 +266,30 @@ vector<T> Graph<T>::bfs(const T & source) const {
 	// HINT: Use the flag "visited" to mark newly discovered vertices .
 	// HINT: Use the "queue<>" class to temporarily store the vertices.
 	vector<T> res;
+    typename vector<Vertex<T> *>::const_iterator it = vertexSet.begin();
+    while (it != vertexSet.end()) {
+        (*it)->visited = false;
+        it++;
+    }
+    Vertex<T>* src = findVertex(source);
+    Vertex<T>* v;
+    queue<Vertex<T>*> Q;
+    Q.push(src);
+
+    while (!Q.empty()) {
+        v = Q.front();
+        Q.pop();
+        res.push_back(v->info);
+        typename vector<Edge<T>>::const_iterator it2 = v->adj.begin();
+        while (it2 != v->adj.end()) {
+            if (!(*it2).dest->visited) {
+                Q.push((*it2).dest);
+                (*it2).dest->visited = true;
+            }
+            it2++;
+        }
+    }
+
 	return res;
 }
 
