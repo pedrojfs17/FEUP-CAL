@@ -9,7 +9,6 @@ using testing::Eq;
 
 void createNetwork(Graph<Person> & net1)
 {
-    /*
     Person p1("Ana",19);
     Person p2("Carlos",33);
     Person p3("Filipe", 20);
@@ -29,7 +28,6 @@ void createNetwork(Graph<Person> & net1)
     net1.addEdge(p3,p6,0);
     net1.addEdge(p3,p7,0);
     net1.addEdge(p6,p2,0);
-     */
 }
 
 TEST(CAL_FP04, test_addVertex) {
@@ -95,7 +93,7 @@ TEST(CAL_FP04, test_removeEdge) {
 }
 
 TEST(CAL_FP04, test_dfs) {
-    /* //uncomment test body below!
+    //uncomment test body below!
     Graph<Person> net1;
     createNetwork(net1);
     vector<Person> v1 = net1.dfs();
@@ -105,7 +103,6 @@ TEST(CAL_FP04, test_dfs) {
             EXPECT_EQ(names[i], v1[i].getName());
         else
             EXPECT_EQ(names[i], "(null)");
-     */
 }
 
 TEST(CAL_FP04, test_bfs) {

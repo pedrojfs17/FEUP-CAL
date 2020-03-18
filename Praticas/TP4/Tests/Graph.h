@@ -217,6 +217,21 @@ template <class T>
 vector<T> Graph<T>::dfs() const {
 	// TODO (7 lines)
 	vector<T> res;
+	typename vector<Vertex<T> *>::const_iterator it = vertexSet.begin();
+
+	while (it != vertexSet.end()) {
+        (*it)->visited = false;
+	    it++;
+	}
+
+	it = vertexSet.begin();
+
+	while(it != vertexSet.end()) {
+	    if (!(*it)->visited)
+	        dfsVisit(*it, res);
+	    it++;
+	}
+
 	return res;
 }
 
@@ -227,6 +242,14 @@ vector<T> Graph<T>::dfs() const {
 template <class T>
 void Graph<T>::dfsVisit(Vertex<T> *v, vector<T> & res) const {
 	// TODO (7 lines)
+    v->visited = true;
+    res.push_back(v->info);
+    typename vector<Edge<T>>::const_iterator it = v->adj.begin();
+    while (it != v->adj.end()) {
+        if (!(*it).dest->visited)
+            dfsVisit((*it).dest, res);
+        it++;
+    }
 }
 
 /****************** 2b) bfs ********************/
