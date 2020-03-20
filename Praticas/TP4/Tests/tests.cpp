@@ -171,7 +171,7 @@ TEST(CAL_FP04, test_maxNewChildren) {
 }
 
 TEST(CAL_FP04, test_isDAG) {
-    /* //uncomment test body below!
+    //uncomment test body below!
     Graph<int> myGraph;
 
     myGraph.addVertex(0);myGraph.addVertex(1); myGraph.addVertex(2);
@@ -196,7 +196,6 @@ TEST(CAL_FP04, test_isDAG) {
     myGraph.addEdge(1, 4, 0);
 
     EXPECT_EQ(true, myGraph.isDAG());
-     */
 }
 
 TEST(CAL_FP04, test_topsort) {

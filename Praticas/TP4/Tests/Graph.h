@@ -440,6 +440,21 @@ template <class T>
 bool Graph<T>::isDAG() const {
 	// TODO (9 lines, mostly reused)
 	// HINT: use the auxiliary field "processing" to mark the vertices in the stack.
+    typename vector<Vertex<T> *>::const_iterator it = vertexSet.begin();
+    while (it != vertexSet.end()) {
+        (*it)->processing = false;
+        it++;
+    }
+    it = vertexSet.begin();
+
+    while(it != vertexSet.end()) {
+        if (!(*it)->processing) {
+            if (!dfsIsDAG(*it))
+                return false;
+        }
+        it++;
+    }
+
 	return true;
 }
 
@@ -450,6 +465,18 @@ bool Graph<T>::isDAG() const {
 template <class T>
 bool Graph<T>::dfsIsDAG(Vertex<T> *v) const {
 	// TODO (12 lines, mostly reused)
+    v->processing = true;
+    typename vector<Edge<T>>::const_iterator it = v->adj.begin();
+    while (it != v->adj.end()) {
+        if (!(*it).dest->processing) {
+            if (!dfsIsDAG((*it).dest))
+                return false;
+            it++;
+        }
+        else
+            return false;
+    }
+    v->processing = false;
 	return true;
 }
 
