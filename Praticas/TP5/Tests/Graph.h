@@ -201,16 +201,57 @@ void Graph<T>::unweightedShortestPath(const T &orig) {
 
 }
 
-
 template<class T>
 void Graph<T>::dijkstraShortestPath(const T &origin) {
 	// TODO
-}
+    for (auto ver : vertexSet) {
+        ver->dist = INT_MAX;
+        ver->path = NULL;
+    }
 
+    Vertex<T> *src = findVertex(origin), *v;
+    src->dist = 0;
+    MutablePriorityQueue<Vertex<T>> Q;
+    Q.insert(src);
+
+    while (!Q.empty()) {
+        v = Q.extractMin();
+        typename vector<Edge<T>>::const_iterator it2 = v->adj.begin();
+        while (it2 != v->adj.end()) {
+            if ((*it2).dest->dist > v->dist + (*it2).weight) {
+                (*it2).dest->dist = v->dist + (*it2).weight;
+                (*it2).dest->path = v;
+                if (!Q.inQueue((*it2).dest))
+                    Q.insert((*it2).dest);
+                else
+                    Q.decreaseKey((*it2).dest);
+            }
+            it2++;
+        }
+    }
+}
 
 template<class T>
 void Graph<T>::bellmanFordShortestPath(const T &orig) {
 	// TODO
+    for (auto ver : vertexSet) {
+        ver->dist = INT_MAX;
+        ver->path = NULL;
+    }
+
+    Vertex<T> *src = findVertex(orig);
+    src->dist = 0;
+
+    for (int i = 1; i < vertexSet.size() - 1; i++) {
+        for (auto v : vertexSet) {
+            for(Edge<T> edge: v->adj) {
+                if(edge.dest->dist > v->dist + edge.weight){
+                    edge.dest->dist = v->dist + edge.weight;
+                    edge.dest->path = v;
+                }
+            }
+        }
+    }
 }
 
 

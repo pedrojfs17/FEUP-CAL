@@ -101,7 +101,7 @@ TEST(CAL_FP05, test_unweightedShortestPath) {
 }
 
 
-/* //Uncomment the test below...
+//Uncomment the test below...
 TEST(CAL_FP05, test_dijkstra) {
     Graph<int> myGraph = CreateTestGraph();
 
@@ -118,10 +118,9 @@ TEST(CAL_FP05, test_dijkstra) {
     myGraph.dijkstraShortestPath(7);
     checkSinglePath(myGraph.getPathTo(1), "7 6 4 3 1 ");
 }
-*/
 
-
- /* //Uncomment the test below...
+/*
+//Uncomment the test below...
 TEST(CAL_FP05, test_performance_dijkstra) {
     for (int n = 10; n <= 100; n += 10) {
         Graph< pair<int,int> > g;
@@ -136,11 +135,10 @@ TEST(CAL_FP05, test_performance_dijkstra) {
         auto elapsed = chrono::duration_cast<chrono::microseconds>(finish - start).count();
         cout << "Dijkstra processing grid " << n << " x " << n << " average time (micro-seconds)=" << (elapsed / (n*n)) << endl;
     }
-}
-*/
+}*/
 
 
-/* //Uncomment the test below...
+//Uncomment the test below...
 TEST(CAL_FP05, test_bellmanFord) {
     Graph<int> myGraph = CreateTestGraph();
 
@@ -156,7 +154,6 @@ TEST(CAL_FP05, test_bellmanFord) {
     myGraph.bellmanFordShortestPath(7);
     checkSinglePath(myGraph.getPathTo(1), "7 6 4 3 1 ");
 }
-*/
 
 
 /* //Uncomment the test below...
