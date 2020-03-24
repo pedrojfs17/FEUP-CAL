@@ -88,7 +88,7 @@ void checkSinglePath(vector<T> path, string expected) {
  * Unit tests... must be uncommented to proceed...
  */
 
-/* //Uncomment the test below...
+//Uncomment the test below...
 TEST(CAL_FP05, test_unweightedShortestPath) {
     Graph<int> myGraph = CreateTestGraph();
 
@@ -99,7 +99,6 @@ TEST(CAL_FP05, test_unweightedShortestPath) {
     myGraph.unweightedShortestPath(5);
     checkSinglePath(myGraph.getPathTo(6), "5 7 6 ");
 }
-*/
 
 
 /* //Uncomment the test below...

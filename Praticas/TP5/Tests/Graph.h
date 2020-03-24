@@ -174,6 +174,31 @@ bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
 template<class T>
 void Graph<T>::unweightedShortestPath(const T &orig) {
 	// TODO
+	Vertex<T> *src = findVertex(orig), *v;
+
+    for (auto ver : vertexSet) {
+        ver->dist = INT64_MAX;
+        ver->path = NULL;
+    }
+
+    src->dist = 0;
+    queue<Vertex<T>*> Q;
+    Q.push(src);
+
+    while (!Q.empty()) {
+        v = Q.front();
+        Q.pop();
+        typename vector<Edge<T>>::const_iterator it2 = v->adj.begin();
+        while (it2 != v->adj.end()) {
+            if ((*it2).dest->dist == INT64_MAX) {
+                Q.push((*it2).dest);
+                (*it2).dest->dist = v->dist + 1;
+                (*it2).dest->path = v;
+            }
+            it2++;
+        }
+    }
+
 }
 
 
@@ -192,8 +217,16 @@ void Graph<T>::bellmanFordShortestPath(const T &orig) {
 template<class T>
 vector<T> Graph<T>::getPathTo(const T &dest) const{
 	vector<T> res;
-	// TODO
-	return res;
+
+	Vertex<T> *v = findVertex(dest);
+    res.insert(res.begin(), v->info);
+
+	do {
+        v = v->path;
+        res.insert(res.begin(), v->info);
+	} while (v->path != NULL);
+
+    return res;
 }
 
 
