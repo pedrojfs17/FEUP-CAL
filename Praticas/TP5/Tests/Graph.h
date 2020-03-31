@@ -289,10 +289,8 @@ void Graph<T>::floydWarshallShortestPath() {
 	int i = 0, j = 0;
     for (auto v1 : vertexSet) {
         for (auto v2 : vertexSet) {
-            if (i == j) {
+            if (i == j)
                 dist[i][j] = 0;
-                pred[i][j] = v1;
-            }
             else
                 for (Edge<T> edge: v1->adj)
                     if (edge.dest->info == v2->info) {
@@ -304,15 +302,6 @@ void Graph<T>::floydWarshallShortestPath() {
         i++;
         j = 0;
     }
-
-
-    // Print Dist Matrix
-    /*for (auto row : dist) {
-        for (auto x : row) {
-            cout << x << "\t";
-        }
-        cout << endl;
-    }*/
 
     for (int k = 0; k < vertexSet.size(); k++) {
         int i = 0, j = 0;
@@ -328,61 +317,32 @@ void Graph<T>::floydWarshallShortestPath() {
             j = 0;
         }
     }
-
-    for (auto row : dist) {
-        for (auto x : row) {
-            cout << x << "\t";
-        }
-        cout << endl;
-    }
-    cout << endl << endl;
-    for (auto row : pred) {
-        for (auto x : row) {
-            if (x != NULL)
-                cout << x->getInfo() << "\t";
-            else
-                cout << "NULL\t";
-        }
-        cout << endl;
-    }
-}
-
-template<class T>
-void printPath(vector<vector<Vertex<T>*>> path, int v, int u)
-{
-    if (path[v][u] == v)
-        return;
-
-    printPath(path, v, path[v][u]);
-    cout << path[v][u] << " ";
 }
 
 template<class T>
 vector<T> Graph<T>::getfloydWarshallPath(const T &orig, const T &dest) const{
 	vector<T> res;
 	// TODO
-	int srcIndex, destIndex, i = 0;
+	int srcIndex, destIndex;
 
-	for (auto x : vertexSet) {
-	    if (x->info == orig)
+    for (int i = 0; i < vertexSet.size(); i++) {
+	    if (vertexSet.at(i)->info == orig)
 	        srcIndex = i;
-	    else if (x->info == dest)
+	    else if (vertexSet.at(i)->info == dest)
 	        destIndex = i;
-	    i++;
 	}
 
 	while (pred[srcIndex][destIndex] != vertexSet[srcIndex]) {
-	    res.insert(res.begin(), pred[srcIndex][destIndex]->info);
-	    i = 0;
-        for (auto x : vertexSet) {
-            if (x->info == pred[srcIndex][destIndex]->info)
+	    res.emplace(res.begin(), pred[srcIndex][destIndex]->info);
+        for (int i = 0; i < vertexSet.size(); i++) {
+            if (vertexSet.at(i)->info == pred[srcIndex][destIndex]->info) {
                 destIndex = i;
-            i++;
+                break;
+            }
         }
 	}
-
+    res.push_back(dest);
     res.insert(res.begin(), orig);
-	res.push_back(dest);
 
 	return res;
 }
