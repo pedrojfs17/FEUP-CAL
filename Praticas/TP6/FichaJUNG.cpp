@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <string>
+using namespace std;
 
 void exercicio1();
 void exercicio2();
@@ -99,16 +101,48 @@ void exercicio2()
 
         gv->rearrange();
     }
-    
+
 }
 
 void exercicio3()
 {
-// TODO: Implement here exercise 3!
-// To read map files, use relative paths:
-// Vertices data: "../resources/mapa1/nos.txt"
-// Edges data: "../resources/mapa1/arestas.txt"
-// ...
+    GraphViewer * gv = new GraphViewer(600, 600, false);
+    gv->setBackground("../background.jpg");
+    gv->createWindow(600, 600);
+    gv->defineVertexColor("blue");
+    gv->defineEdgeColor("black");
+
+    ifstream edgeFile;
+    edgeFile.open("../resources/mapa1/arestas.txt");
+
+    ifstream nodeFile;
+    nodeFile.open("../resources/mapa1/nos.txt");
+
+    while (!nodeFile.eof()) {
+        string line;
+        int id, x, y;
+        getline(nodeFile, line, ';');
+        id = stoi(line);
+        getline(nodeFile, line, ';');
+        x = stoi(line);
+        getline(nodeFile, line, '\n');
+        y = stoi(line);
+
+        gv->addNode(id, x, y);
+    }
+
+    while (!edgeFile.eof()) {
+        string line;
+        int id, n1, n2;
+        getline(edgeFile, line, ';');
+        id = stoi(line);
+        getline(edgeFile, line, ';');
+        n1 = stoi(line);
+        getline(edgeFile, line, '\n');
+        n2 = stoi(line);
+
+        gv->addEdge(id, n1, n2, EdgeType::UNDIRECTED);
+    }
 }
 
 int main() {
@@ -120,13 +154,13 @@ int main() {
     /*
       * Uncomment the line below to run Exercise 2
       */
-    exercicio2();
+    //exercicio2();
 
     /*
       * Uncomment the line below to run Exercise 3
       */
 	//
-	//exercicio3();
+	exercicio3();
 
 	getchar();
 	return 0;
