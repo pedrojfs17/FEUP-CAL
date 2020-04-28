@@ -1,0 +1,6 @@
+.idea/
+cmake-build-debug/
+lib/
+CMakeLists.txt
+main.cpp
+Tests/desktop.ini
