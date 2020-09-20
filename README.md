@@ -8,7 +8,7 @@
 Este repositório contém:
 - Aulas Práticas
 
-[**Course Page**](https://github.com/Ca-moes/MeatWagons)
+[**Projeto**](https://github.com/Ca-moes/MeatWagons)
 
 ## Grades
 
